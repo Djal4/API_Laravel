@@ -25,7 +25,7 @@ class InternController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validation([
+        $request->validate([
             'name' => 'required',
             'lastname'=>'required',
             'email'=>'required',

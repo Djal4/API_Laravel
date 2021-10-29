@@ -16,11 +16,13 @@ use App\Models\Intern;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/Interns', [InternController::class,'index']);
+/*Route::get('/Interns', [InternController::class,'index']);
 Route::post('/Interns',[InternController::class,'store']);
 Route::get('/Interns/{id}',[InternController::class,'show']);
 Route::put('/Interns/{id}',[InternController::class,'update']);
 Route::delete('/Interns/{id}',[InternController::class,'destroy']);
+*/
+Route::resource('/Interns',InternController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
