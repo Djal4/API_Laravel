@@ -18,9 +18,8 @@ class CreateInternsTable extends Migration
             $table->string('name')->required();
             $table->string('lastname');
             $table->string('city');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('number');
-            $table->string('group_id');
             $table->string('cv');
             $table->string('path')->default('');
         });
