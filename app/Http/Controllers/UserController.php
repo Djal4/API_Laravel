@@ -25,13 +25,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        /*$request->validate([
             'name' => 'required',
             'lastname' => 'required',
             'skype'=> 'required',
             'role_id'=> 'required',
             'password'=>'required|min:8'
-        ]);
+        ]);*/
         return User::create($request->all());
     }
 
@@ -55,13 +55,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        /*$request->validate([
             'name' => 'required',
             'lastname' => 'required',
             'skype'=> 'required',
             'role_id'=> 'required',
             'password'=>'required|confirmed'
-        ]);
+        ]);*/
         $user= User::find($id);
         $user->update($request->all());
         return $user;
