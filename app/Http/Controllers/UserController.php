@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Intern;
+use App\Models\User;
 
-class InternController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class InternController extends Controller
      */
     public function index()
     {
-        return Intern::all();
+        return User::all();
     }
 
     /**
@@ -27,12 +27,12 @@ class InternController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'number'=>'required|numeric|min:8',
-            'cv'=>'required|mimetypes:application/pdf|max:10000'
+            'lastname' => 'required',
+            'skype'=> 'required',
+            'role_id'=> 'required',
+            'password'=>'required|min:8'
         ]);
-        return Intern::create($request->all());
+        return User::create($request->all());
     }
 
     /**
@@ -43,7 +43,7 @@ class InternController extends Controller
      */
     public function show($id)
     {
-        return Intern::find($id);
+        return User::find($id);
     }
 
     /**
@@ -55,9 +55,16 @@ class InternController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $intern= Intern::find($id);
-        $intern->update($request->all());
-        return $intern;        
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required',
+            'skype'=> 'required',
+            'role_id'=> 'required',
+            'password'=>'required|confirmed'
+        ]);
+        $user= User::find($id);
+        $user->update($request->all());
+        return $user;
     }
 
     /**
@@ -68,6 +75,6 @@ class InternController extends Controller
      */
     public function destroy($id)
     {
-        return Intern::destroy($id); 
+        return User::destroy($id);
     }
 }

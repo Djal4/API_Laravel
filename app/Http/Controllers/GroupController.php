@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Intern;
+use App\Models\Group;
 
-class InternController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class InternController extends Controller
      */
     public function index()
     {
-        return Intern::all();
+        return Group::all();
     }
 
     /**
@@ -26,13 +26,9 @@ class InternController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'number'=>'required|numeric|min:8',
-            'cv'=>'required|mimetypes:application/pdf|max:10000'
+            'title' => 'required'
         ]);
-        return Intern::create($request->all());
+        return Group::create($request->all());
     }
 
     /**
@@ -43,7 +39,7 @@ class InternController extends Controller
      */
     public function show($id)
     {
-        return Intern::find($id);
+        return Group::find($id);
     }
 
     /**
@@ -55,9 +51,13 @@ class InternController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $intern= Intern::find($id);
-        $intern->update($request->all());
-        return $intern;        
+        $request->validate([
+            'title' => 'required'
+        ]);
+
+        $group=Group::find($id);
+        $group->update($request->all());
+        return $group;
     }
 
     /**
@@ -68,6 +68,6 @@ class InternController extends Controller
      */
     public function destroy($id)
     {
-        return Intern::destroy($id); 
+        return Group::destroy($id);
     }
 }

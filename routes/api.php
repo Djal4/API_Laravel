@@ -2,9 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Http\Controllers\InternController;
-use App\Models\Intern;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,13 +15,9 @@ use App\Models\Intern;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*Route::get('/Interns', [InternController::class,'index']);
-Route::post('/Interns',[InternController::class,'store']);
-Route::get('/Interns/{id}',[InternController::class,'show']);
-Route::put('/Interns/{id}',[InternController::class,'update']);
-Route::delete('/Interns/{id}',[InternController::class,'destroy']);
-*/
+
 Route::resource('/Interns',InternController::class);
+Route::resource('/Groups',GroupController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
