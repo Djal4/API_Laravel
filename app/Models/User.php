@@ -23,7 +23,7 @@ class User extends Authenticatable
         'lastname',
         'skype',
         'password',
-        'role_id',
+        'roles_id',
         'group_id'
     ];
 

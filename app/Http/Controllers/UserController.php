@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserStoreRequest;
 
 class UserController extends Controller
 {
@@ -20,18 +21,11 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        /*$request->validate([
-            'name' => 'required',
-            'lastname' => 'required',
-            'skype'=> 'required',
-            'role_id'=> 'required',
-            'password'=>'required|min:8'
-        ]);*/
         return User::create($request->all());
     }
 
@@ -49,19 +43,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\UserStoreRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(userStoreRequest $request, $id)
     {
-        /*$request->validate([
-            'name' => 'required',
-            'lastname' => 'required',
-            'skype'=> 'required',
-            'role_id'=> 'required',
-            'password'=>'required|confirmed'
-        ]);*/
         $user= User::find($id);
         $user->update($request->all());
         return $user;
