@@ -15,15 +15,15 @@ class RelationshipHolder extends Migration
     {
         Schema::table('users',function(Blueprint $table){
             $table->foreignId('roles_id')->constrained('roles');
-            $table->foreignId('group_id')->constrained('groups');
+            $table->foreignId('group_id')->nullable()->constrained('groups');
         });
 
         Schema::table('interns',function(Blueprint $table){
-            $table->foreignId('group_id')->constrained('groups');
+            $table->foreignId('group_id')->nullable()->constrained('groups');
         });
 
         Schema::table('assignements',function(Blueprint $table){
-            $table->foreignId('group_id')->constrained('groups');
+            $table->foreignId('group_id')->nullable()->constrained('groups');
         });
         Schema::table('reviews',function(Blueprint $table){
             $table->foreignId('intern_id')->constrained('interns');
