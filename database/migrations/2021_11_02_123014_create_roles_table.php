@@ -17,6 +17,13 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->string('titles');
         });
+
+        //Seeder calling.
+        \Artisan::call('db:seed', [
+
+            '--class' => 'RoleSeeder',
+    
+        ]);
     }
 
     /**
