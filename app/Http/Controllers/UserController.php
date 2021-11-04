@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\UserRequest;
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\Requests\User\UserStoreRequest;
 
 class UserController extends Controller
 {
@@ -21,10 +21,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\User\UserStoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         return User::create($request->all());
     }
@@ -47,7 +47,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserStoreRequest $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
         $user= User::find($id);
         $user->update($request->all());

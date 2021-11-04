@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Intern\InternStoreRequest;
+use App\Http\Requests\Intern\InternUpdateRequest;
 use App\Models\Intern;
 
 class InternController extends Controller
@@ -20,18 +21,11 @@ class InternController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Request\InternStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InternStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'number'=>'required|numeric|min:8',
-            'cv'=>'required|mimetypes:application/pdf|max:10000'
-        ]);
         return Intern::create($request->all());
     }
 
@@ -49,11 +43,11 @@ class InternController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Request\InternUpdateRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(InternUpdateRequest $request, $id)
     {
         $intern= Intern::find($id);
         $intern->update($request->all());

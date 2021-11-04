@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Intern;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class InternStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,11 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'lastname' => 'required',
-            'skype'=> 'required',
-            'roles_id'=> 'required',
-            'password'=>'required|min:8'
+            'lastname'=>'required',
+            'email'=>'required|email',
+            'city' => 'sometimes|required',
+            'number'=>'sometimes|required|numeric|min:8',
+            'cv'=>'required|mimetypes:application/pdf|max:10000'
         ];
     }
 }
