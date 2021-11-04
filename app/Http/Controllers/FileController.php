@@ -22,6 +22,11 @@ class FileController extends Controller
         $intern=Intern::find($id);
         $intern->update(['cv'=>$name,'path'=>$path]);
     }
+    /**
+     * Show Intern's CV in storage.
+     *
+     * @param int $id
+     */
     public function show($id)
     {
         $intern=Intern::find($id);
