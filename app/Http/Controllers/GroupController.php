@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Group;
+use Illuminate\Support\Facades\DB;
+
 
 class GroupController extends Controller
 {
@@ -42,6 +44,32 @@ class GroupController extends Controller
         return Group::find($id);
     }
 
+    /**
+     * Display group's all members.
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showInfo($id)
+    {
+        $response=[];
+        $response[]=DB::table('groups')
+            ->join('interns','groups.id','=','interns.group_id')
+            ->select('interns.name','interns.lastname','interns.email')
+            ->where('groups.id','=',$id)
+            ->get();
+        $response[]=DB::table('groups')
+            ->join('users','groups.id','=','users.group_id')
+            ->select('users.name','users.lastname','users.skype')
+            ->where('groups.id','=',$id)
+            ->get();
+        $response[]=DB::table('groups')
+            ->join('assignements','groups.id','=','assignements.group_id')
+            ->select('assignements.title','assignements.description','assignements.date_assigned','assignements.finish_date')
+            ->where('groups.id','=',$id)
+            ->get();
+        return $response;    
+    }
     /**
      * Update the specified resource in storage.
      *

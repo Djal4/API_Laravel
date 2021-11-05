@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Intern;
+namespace App\Http\Requests\Review;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InternStoreRequest extends FormRequest
+class ReviewUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,12 @@ class InternStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'city' => 'sometimes|required',
-            'number'=>'sometimes|required|numeric|min:8'
+            'mark' =>'sometimes|required|numeric',
+            'pros' =>'sometimes|required|min:20',
+            'cons' =>'sometimes|required|min:20',
+            'intern_id'=>'sometimes|required|numeric',
+            'mentor_id'=>'sometimes|required|numeric',
+            'assignement_id'=>'sometimes|required|numeric'
         ];
     }
 }
-//            'cv'=>'required|mimetypes:application/pdf|max:10000'
-

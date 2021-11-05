@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\FileStoreRequest;
 use App\Models\Intern;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -12,11 +12,11 @@ class FileController extends Controller
     /**
      * Store Intern's CV in storage.
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param App\Http\Requests\FileStoreRequest $request
      * @param int $id
      * @param string $path
      */
-    public function store(Request $request,$id,$path='')
+    public function store(FileStoreRequest $request,$id,$path='')
     {
         $name=Storage::put($path,$request->file('file'));
         $intern=Intern::find($id);
