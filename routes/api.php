@@ -20,19 +20,21 @@ use App\Http\Controllers\FileController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['middleware'=>['auth:sanctum']],function(){
+    Route::resource('/Interns',InternController::class);
+    Route::get('/Intern/get/{id}',[FileController::class,'show']);
+    Route::post('/Intern/store/{id}',[FileController::class,'store']);
 
-Route::resource('/Interns',InternController::class);
-Route::resource('/Groups',GroupController::class);
-Route::get('/Group/get/{id}',[GroupController::class,'showInfo']);
-Route::resource('/Users',UserController::class);
-Route::resource('/Assignment',AssignementController::class);
-Route::post('/Assignment/copy/{id}',[AssignementController::class,'copy']);
-Route::resource('Reviews',ReviewController::class);
+    Route::resource('/Groups',GroupController::class);
+    Route::get('/Group/get/{id}',[GroupController::class,'showInfo']);
 
-Route::get('/Intern/get/{id}',[FileController::class,'show']);
-Route::post('/Intern/store/{id}',[FileController::class,'store']);
+    Route::resource('/Users',UserController::class);
 
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::resource('/Assignment',AssignementController::class);
+    Route::post('/Assignment/copy/{id}',[AssignementController::class,'copy']);
+    
+    Route::resource('Reviews',ReviewController::class);
 });
+
+Route::post('/login',[UserController::class,'logIn']);
+

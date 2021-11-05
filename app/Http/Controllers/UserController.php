@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Requests\User\UserStoreRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -63,5 +65,31 @@ class UserController extends Controller
     public function destroy($id)
     {
         return User::destroy($id);
+    }
+
+    /**
+     * Log into system.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function logIn(Request $request)
+    {
+        $credentials = $request->validate([
+            'skype' => 'required',
+            'password' => 'required'
+        ]);
+        
+        $user=User::where('skype',$credentials['skype'])->first();
+        if(!$user || $user->password!=$credentials['password']){
+            return response(['Message'=>'Bad Credentials']);
+        }else{
+            $token=$user->createToken('token');
+            return response([
+                'user' => $user,
+                'auth_token' => $token
+            ]);
+        }
     }
 }
