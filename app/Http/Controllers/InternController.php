@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Intern\InternStoreRequest;
 use App\Http\Requests\Intern\InternUpdateRequest;
 use App\Models\Intern;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class InternController extends Controller
@@ -16,6 +17,7 @@ class InternController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Intern::class);
         return Intern::all();
     }
 
@@ -27,7 +29,9 @@ class InternController extends Controller
      */
     public function store(InternStoreRequest $request)
     {
+        $this->authorize('create',Intern::class);
         return Intern::create($request->all());
+        
     }
 
     /**
@@ -38,6 +42,17 @@ class InternController extends Controller
      */
     public function show($id)
     {
+        return Intern::find($id);
+    }
+    /**
+     * Display all intern's data.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showInfo($id)
+    {
+        $this->authorize('view',Intern::class);
         $response=[];
         $response[]=DB::table('interns')
             ->join('groups','interns.group_id','=','groups.id')
@@ -75,6 +90,7 @@ class InternController extends Controller
     public function update(InternUpdateRequest $request, $id)
     {
         $intern= Intern::find($id);
+        $this->authorize('update',$intern);
         $intern->update($request->all());
         return $intern;        
     }
@@ -87,6 +103,7 @@ class InternController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete',Intern::class);
         return Intern::destroy($id); 
     }
 }

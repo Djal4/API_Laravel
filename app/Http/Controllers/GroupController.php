@@ -16,6 +16,7 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Group::class);
         return Group::all();
     }
 
@@ -27,6 +28,7 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create',Group::class);
         $request->validate([
             'title' => 'required'
         ]);
@@ -41,6 +43,7 @@ class GroupController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view',Group::class);
         return Group::find($id);
     }
 
@@ -52,6 +55,7 @@ class GroupController extends Controller
      */
     public function showInfo($id)
     {
+        $this->authorize('view',Group::class);
         $response=[];
         $response[]=DB::table('groups')
             ->join('interns','groups.id','=','interns.group_id')
@@ -79,6 +83,7 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update',Group::class);
         $request->validate([
             'title' => 'required'
         ]);
@@ -96,6 +101,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete',Group::class);
         return Group::destroy($id);
     }
 }

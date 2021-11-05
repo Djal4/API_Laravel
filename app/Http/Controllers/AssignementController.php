@@ -16,6 +16,7 @@ class AssignementController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Assignement::class);
         return Assignement::all();
     }
 
@@ -27,6 +28,7 @@ class AssignementController extends Controller
      */
     public function store(AssignmentStoreRequest $request)
     {
+        $this->authorize('create',Assignement::class);
         return Assignement::create($request->all());
     }
 
@@ -38,6 +40,7 @@ class AssignementController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view',Assignement::class);
         return Assignement::find($id);
     }
 
@@ -50,6 +53,7 @@ class AssignementController extends Controller
      */
     public function update(AssignmentUpdateRequest $request, $id)
     {
+        $this->authorize('update',Assignement::class);
         $assignment=Assignement::find($id);
         $assignment->update($request->all());
         return $assignment;
@@ -63,6 +67,7 @@ class AssignementController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete',Assignement::class);
         return Assignement::destroy($id);
     }
 
@@ -76,6 +81,7 @@ class AssignementController extends Controller
      */
     public function copy(AssignmentCopyRequest $request,$id)
     {
+        $this->authorize('create',Assignement::class);
         $assign=Assignement::find($id);
         return Assignement::create([
         'title'=>$assign['title'],

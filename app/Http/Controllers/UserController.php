@@ -15,8 +15,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getUsr()
+    {
+        $headers=apache_request_headers();
+        $token=explode(' ',$headers['Authorization']);
+        return User::where('remember_token',$token[1])->first();
+    }
     public function index()
     {
+        $this->authorize('viewAny',User::class);
         return User::all();
     }
 
@@ -28,6 +35,10 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $this->authorize('create',User::class);
+        $usr=$this->getUsr();
+        if($usr->roles_id==2 && $request->input('roles_id')!=1)
+            return response(['Error'=>'No permission.'],403);
         return User::create($request->all());
     }
 
@@ -39,6 +50,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view',User::class);
         return User::find($id);
     }
 
@@ -51,7 +63,11 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
+        $this->authorize('update',User::class);
+        $usr=$this->getUsr();
         $user= User::find($id);
+        if($usr->roles_id==2 && ($request->input('roles_id')!=1 || $user['roles_id']>1))
+            return response(['Error'=>'No permission.'],403);
         $user->update($request->all());
         return $user;
     }
@@ -64,6 +80,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete',User::class);
         return User::destroy($id);
     }
 
@@ -85,7 +102,9 @@ class UserController extends Controller
         if(!$user || $user->password!=$credentials['password']){
             return response(['Message'=>'Bad Credentials']);
         }else{
-            $token=$user->createToken('token');
+            $token=$user->createToken('token')->plainTextToken;
+            $user->remember_Token=$token;
+            $user->save();
             return response([
                 'user' => $user,
                 'auth_token' => $token

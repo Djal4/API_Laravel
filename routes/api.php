@@ -24,7 +24,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('/Interns',InternController::class);
     Route::get('/Intern/get/{id}',[FileController::class,'show']);
     Route::post('/Intern/store/{id}',[FileController::class,'store']);
-
+    Route::get('/Intern/show/{id}',[InternController::class,'showInfo']);
     Route::resource('/Groups',GroupController::class);
     Route::get('/Group/get/{id}',[GroupController::class,'showInfo']);
 

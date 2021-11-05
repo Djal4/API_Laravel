@@ -16,6 +16,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Review::class);
         return Review::all();
     }
 
@@ -27,6 +28,7 @@ class ReviewController extends Controller
      */
     public function store(ReviewStoreRequest $request)
     {
+        $this->authorize('create',Review::class);
         return Review::create($request->all());
     }
 
@@ -38,6 +40,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view',Review::class);
         return Review::find($id);
     }
 
@@ -49,6 +52,7 @@ class ReviewController extends Controller
      */
     public function showIntern($id)
     {
+        $this->authorize('view',Review::class);
         return DB::table('reviews')
             ->where('intern_id','=',$id)
             ->orderBy('date_reviewed','asc');
@@ -63,6 +67,7 @@ class ReviewController extends Controller
      */
     public function update(ReviewUpdateRequest $request, $id)
     {
+        $this->authorize('update',Review::class);
         $review=Review::find($id);
         $review->update($request->all());
         return $review;
@@ -76,6 +81,7 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('delete',Review::class);
         return Review::destroy($id);
     }
 }
