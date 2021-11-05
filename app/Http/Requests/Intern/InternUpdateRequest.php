@@ -30,7 +30,7 @@ class InternUpdateRequest extends FormRequest
             'number'=>'sometimes|required|numeric|min:8',
             'city'=> 'sometimes|required',
             'number' => 'sometimes|numeric|required',
-            'group_id'=> 'sometimes|required|min:6'
+            'group_id'=> 'sometimes|required|numeric'
         ];
     }
 }

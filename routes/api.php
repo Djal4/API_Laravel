@@ -33,7 +33,7 @@ Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::resource('/Assignment',AssignementController::class);
     Route::post('/Assignment/copy/{id}',[AssignementController::class,'copy']);
     
-    Route::resource('Reviews',ReviewController::class);
+    Route::resource('/Reviews',ReviewController::class);
 });
 
 Route::post('/login',[UserController::class,'logIn']);

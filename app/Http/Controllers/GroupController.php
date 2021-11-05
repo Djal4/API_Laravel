@@ -60,7 +60,7 @@ class GroupController extends Controller
             ->get();
         $response[]=DB::table('groups')
             ->join('users','groups.id','=','users.group_id')
-            ->select('users.name','users.lastname','users.skype')
+            ->select('users.name as mentor_name','users.lastname as mentor_lastname','users.skype')
             ->where('groups.id','=',$id)
             ->get();
         $response[]=DB::table('groups')

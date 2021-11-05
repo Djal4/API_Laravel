@@ -77,11 +77,11 @@ class UserController extends Controller
     public function logIn(Request $request)
     {
         $credentials = $request->validate([
-            'skype' => 'required',
+            'mail' => 'required',
             'password' => 'required'
         ]);
         
-        $user=User::where('skype',$credentials['skype'])->first();
+        $user=User::where('mail',$credentials['mail'])->first();
         if(!$user || $user->password!=$credentials['password']){
             return response(['Message'=>'Bad Credentials']);
         }else{
