@@ -14,7 +14,7 @@ class RelationshipHolder extends Migration
     public function up()
     {
         Schema::table('users',function(Blueprint $table){
-            $table->foreignId('roles_id')->constrained('roles');
+            $table->foreignId('roles_id')->default(1)->constrained('roles');
             $table->foreignId('group_id')->nullable()->constrained('groups');
         });
 

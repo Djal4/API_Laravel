@@ -20,7 +20,7 @@ class CreateInternsTable extends Migration
             $table->string('city');
             $table->string('email')->unique();
             $table->string('number');
-            $table->string('cv');
+            $table->string('cv')->nullable();
             $table->string('path')->default('');
         });
     }

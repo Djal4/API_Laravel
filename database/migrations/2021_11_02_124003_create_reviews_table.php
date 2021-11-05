@@ -18,6 +18,7 @@ class CreateReviewsTable extends Migration
             $table->smallInteger('mark');
             $table->text('pros');
             $table->text('cons');
+            $table->timestamp('date_reviewed');
         });
     }
 
