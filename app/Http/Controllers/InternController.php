@@ -30,7 +30,7 @@ class InternController extends Controller
     public function store(InternStoreRequest $request)
     {
         $this->authorize('create',Intern::class);
-        return Intern::create($request->all());
+        return Intern::create($request->validated());
         
     }
 
@@ -91,7 +91,7 @@ class InternController extends Controller
     {
         $intern= Intern::find($id);
         $this->authorize('update',$intern);
-        $intern->update($request->all());
+        $intern->update($request->validated());
         return $intern;        
     }
 

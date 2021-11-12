@@ -7,7 +7,7 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -15,12 +15,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUsr()
-    {
-        $headers=apache_request_headers();
-        $token=explode(' ',$headers['Authorization']);
-        return User::where('remember_token',$token[1])->first();
-    }
     public function index()
     {
         $this->authorize('viewAny',User::class);
@@ -36,10 +30,17 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $this->authorize('create',User::class);
-        $usr=$this->getUsr();
+        $usr=User::get();
         if($usr->roles_id==2 && $request->input('roles_id')!=1)
             return response(['Error'=>'No permission.'],403);
-        return User::create($request->all());
+        return User::create([
+            'name'=>$request->input('name'),
+            'lastname'=>$request->input('lastname'),
+            'mail'=>$request->input('mail'),
+            'skype'=>$request->input('skype'),
+            'roles_id'=>$request->input('roles_id'),
+            'password'=>Hash::make($request->input('password'))
+        ]);
     }
 
     /**
@@ -64,11 +65,17 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $this->authorize('update',User::class);
-        $usr=$this->getUsr();
+        $usr=User::get();
         $user= User::find($id);
         if($usr->roles_id==2 && ($request->input('roles_id')!=1 || $user['roles_id']>1))
             return response(['Error'=>'No permission.'],403);
-        $user->update($request->all());
+        if(empty($request->input('password')))    
+            $user->update($request->validated());
+        else{
+            $data=$request->except('password');
+            $data['password']=Hash::make($request->password);
+            $user->update($data);
+        }
         return $user;
     }
 
@@ -99,7 +106,7 @@ class UserController extends Controller
         ]);
         
         $user=User::where('mail',$credentials['mail'])->first();
-        if(!$user || $user->password!=$credentials['password']){
+        if(!$user || !Hash::check($credentials['password'],$user->password)){
             return response(['Message'=>'Bad Credentials']);
         }else{
             $token=$user->createToken('token')->plainTextToken;

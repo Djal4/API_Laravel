@@ -13,9 +13,7 @@ class InternPolicy
 
     public function __construct()
     {
-        $headers=apache_request_headers();
-        $token=explode(' ',$headers['Authorization']);
-        $this->user=User::where('remember_token',$token[1])->first();
+        $this->user=User::get();
     }
     /**
      * Determine whether the user can view any models.

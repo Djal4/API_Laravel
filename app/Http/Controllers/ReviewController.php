@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Review\ReviewStoreRequest;
 use App\Http\Requests\Review\ReviewUpdateRequest;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
@@ -15,9 +16,13 @@ class ReviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $user=User::get();
         $this->authorize('viewAny',Review::class);
-        return Review::all();
+        if($user->roles_id==1)
+            return Review::where('mentor_id',$user->id)->get();
+        else
+            return Review::all();
     }
 
     /**
@@ -29,7 +34,7 @@ class ReviewController extends Controller
     public function store(ReviewStoreRequest $request)
     {
         $this->authorize('create',Review::class);
-        return Review::create($request->all());
+        return Review::create($request->validated());
     }
 
     /**
@@ -69,7 +74,7 @@ class ReviewController extends Controller
     {
         $this->authorize('update',Review::class);
         $review=Review::find($id);
-        $review->update($request->all());
+        $review->update($request->validated());
         return $review;
     }
 

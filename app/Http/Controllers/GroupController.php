@@ -32,7 +32,7 @@ class GroupController extends Controller
         $request->validate([
             'title' => 'required'
         ]);
-        return Group::create($request->all());
+        return Group::create($request->validated());
     }
 
     /**
@@ -89,7 +89,7 @@ class GroupController extends Controller
         ]);
 
         $group=Group::find($id);
-        $group->update($request->all());
+        $group->update($request->validated());
         return $group;
     }
 

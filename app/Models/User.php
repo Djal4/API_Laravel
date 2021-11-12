@@ -37,4 +37,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public static function get()
+    {
+        $headers=apache_request_headers();
+        $token=explode(' ',$headers['Authorization']);
+        return User::where('remember_token',$token[1])->first();
+    }
 }

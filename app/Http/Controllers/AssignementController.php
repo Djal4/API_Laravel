@@ -29,7 +29,7 @@ class AssignementController extends Controller
     public function store(AssignmentStoreRequest $request)
     {
         $this->authorize('create',Assignement::class);
-        return Assignement::create($request->all());
+        return Assignement::create($request->validated());
     }
 
     /**
@@ -55,7 +55,7 @@ class AssignementController extends Controller
     {
         $this->authorize('update',Assignement::class);
         $assignment=Assignement::find($id);
-        $assignment->update($request->all());
+        $assignment->update($request->validated());
         return $assignment;
     }
 
