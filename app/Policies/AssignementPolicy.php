@@ -20,7 +20,7 @@ class AssignementPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny()
     {
         return true;
     }
@@ -32,7 +32,7 @@ class AssignementPolicy
      * @param  \App\Models\Assignement  $assignement
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Assignement $assignement)
+    public function view()
     {
         return true;
     }
@@ -71,7 +71,7 @@ class AssignementPolicy
      */
     public function delete()
     {
-        if($this->user->role_id==3)
+        if($this->user->roles_id==3)
             return true;
         return false;
     }

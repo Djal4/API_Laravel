@@ -22,7 +22,7 @@ class ReviewPolicy
      */
     public function viewAny()
     {
-        if($this->user->rules_id==1 || $this->user->rules_id==3)
+        if($this->user->roles_id==1 || $this->user->roles_id==3)
             return true;
         return false;
     }
@@ -36,7 +36,7 @@ class ReviewPolicy
      */
     public function view()
     {
-        if($this->user->rules_id==1 || $this->user->rules_id==3)
+        if($this->user->roles_id==1 || $this->user->roles_id==3)
             return true;
         return false;
     }
@@ -49,7 +49,7 @@ class ReviewPolicy
      */
     public function create()
     {
-        if($this->user->rules_id==1 || $this->user->rules_id==3)
+        if($this->user->roles_id==1 || $this->user->roles_id==3)
             return true;
         return false;
     }
@@ -63,7 +63,7 @@ class ReviewPolicy
      */
     public function update()
     {
-        if($this->user->rules_id==1 || $this->user->rules_id==3)
+        if($this->user->roles_id==1 || $this->user->roles_id==3)
             return true;
         return false;
     }
@@ -77,7 +77,7 @@ class ReviewPolicy
      */
     public function delete()
     {
-        if($this->user->rules_id==3)
+        if($this->user->roles_id==3)
             return true;
         return false;
     }

@@ -17,7 +17,7 @@ class GroupController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Group::class);
-        return Group::all();
+        return response()->json(['group'=>Group::all()]);
     }
 
     /**
@@ -32,7 +32,7 @@ class GroupController extends Controller
         $request->validate([
             'title' => 'required'
         ]);
-        return Group::create($request->validated());
+        return response()->json(['group'=>Group::create($request->all())]);
     }
 
     /**
@@ -44,7 +44,7 @@ class GroupController extends Controller
     public function show($id)
     {
         $this->authorize('view',Group::class);
-        return Group::find($id);
+        return response()->json(['group'=>Group::find($id)]);
     }
 
     /**
@@ -72,7 +72,7 @@ class GroupController extends Controller
             ->select('assignements.title','assignements.description','assignements.date_assigned','assignements.finish_date')
             ->where('groups.id','=',$id)
             ->get();
-        return $response;    
+        return response()->json(['group'=>$response]);    
     }
     /**
      * Update the specified resource in storage.
@@ -89,8 +89,8 @@ class GroupController extends Controller
         ]);
 
         $group=Group::find($id);
-        $group->update($request->validated());
-        return $group;
+        $group->update($request->all());
+        return response()->json(['group'=>$group]);
     }
 
     /**

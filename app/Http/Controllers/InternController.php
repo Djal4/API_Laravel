@@ -18,7 +18,7 @@ class InternController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Intern::class);
-        return Intern::all();
+        return response()->json(['interns'=>Intern::all()]);
     }
 
     /**
@@ -30,7 +30,7 @@ class InternController extends Controller
     public function store(InternStoreRequest $request)
     {
         $this->authorize('create',Intern::class);
-        return Intern::create($request->validated());
+        return response()->json(['intern'=>Intern::create($request->validated())]);
         
     }
 
@@ -42,7 +42,7 @@ class InternController extends Controller
      */
     public function show($id)
     {
-        return Intern::find($id);
+        return response()->json(['intern'=>Intern::find($id)]);
     }
     /**
      * Display all intern's data.
@@ -77,7 +77,7 @@ class InternController extends Controller
             'reviews.date_reviewed')
             ->where('interns.id','=',$id)
             ->get();
-        return $response;
+        return response()->json(['intern'=>$response]);
     }
 
     /**
@@ -92,7 +92,7 @@ class InternController extends Controller
         $intern= Intern::find($id);
         $this->authorize('update',$intern);
         $intern->update($request->validated());
-        return $intern;        
+        return response()->json(['intern'=>$intern]);        
     }
 
     /**

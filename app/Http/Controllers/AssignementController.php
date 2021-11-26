@@ -17,7 +17,7 @@ class AssignementController extends Controller
     public function index()
     {
         $this->authorize('viewAny',Assignement::class);
-        return Assignement::all();
+        return response()->json(['assignment'=>Assignement::all()]);
     }
 
     /**
@@ -29,7 +29,7 @@ class AssignementController extends Controller
     public function store(AssignmentStoreRequest $request)
     {
         $this->authorize('create',Assignement::class);
-        return Assignement::create($request->validated());
+        return response()->json(['assignment'=>Assignement::create($request->validated())]);
     }
 
     /**
@@ -41,7 +41,7 @@ class AssignementController extends Controller
     public function show($id)
     {
         $this->authorize('view',Assignement::class);
-        return Assignement::find($id);
+        return response()->json(['assignment'=>Assignement::find($id)]);
     }
 
     /**
@@ -56,7 +56,7 @@ class AssignementController extends Controller
         $this->authorize('update',Assignement::class);
         $assignment=Assignement::find($id);
         $assignment->update($request->validated());
-        return $assignment;
+        return response()->json(['assignment'=>$assignment]);
     }
 
     /**
@@ -83,10 +83,10 @@ class AssignementController extends Controller
     {
         $this->authorize('create',Assignement::class);
         $assign=Assignement::find($id);
-        return Assignement::create([
+        return response()->json(['assignment'=>Assignement::create([
         'title'=>$assign['title'],
         'description'=>$assign['description'],
         'group_id'=> $request->input('group_id')
-        ]);
+        ])]);
     }
 }

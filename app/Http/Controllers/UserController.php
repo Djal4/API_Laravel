@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('viewAny',User::class);
-        return User::all();
+        return response()->json(['users'=>User::all()]);
     }
 
     /**
@@ -33,14 +33,14 @@ class UserController extends Controller
         $usr=User::get();
         if($usr->roles_id==2 && $request->input('roles_id')!=1)
             return response(['Error'=>'No permission.'],403);
-        return User::create([
+        return response()->json(['user'=>User::create([
             'name'=>$request->input('name'),
             'lastname'=>$request->input('lastname'),
             'mail'=>$request->input('mail'),
             'skype'=>$request->input('skype'),
             'roles_id'=>$request->input('roles_id'),
             'password'=>Hash::make($request->input('password'))
-        ]);
+        ])]);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function show($id)
     {
         $this->authorize('view',User::class);
-        return User::find($id);
+        return response()->json(['user'=>User::find($id)]);
     }
 
     /**
@@ -76,7 +76,7 @@ class UserController extends Controller
             $data['password']=Hash::make($request->password);
             $user->update($data);
         }
-        return $user;
+        return response()->json(['user'=>$user]);
     }
 
     /**
@@ -112,7 +112,7 @@ class UserController extends Controller
             $token=$user->createToken('token')->plainTextToken;
             $user->remember_Token=$token;
             $user->save();
-            return response([
+            return response()->json([
                 'user' => $user,
                 'auth_token' => $token
             ]);

@@ -20,9 +20,9 @@ class ReviewController extends Controller
         $user=User::get();
         $this->authorize('viewAny',Review::class);
         if($user->roles_id==1)
-            return Review::where('mentor_id',$user->id)->get();
+            return response()->json(['review'=>Review::where('mentor_id',$user->id)->get()]);
         else
-            return Review::all();
+            return response()->json([Review::all()]);
     }
 
     /**
@@ -34,7 +34,7 @@ class ReviewController extends Controller
     public function store(ReviewStoreRequest $request)
     {
         $this->authorize('create',Review::class);
-        return Review::create($request->validated());
+        return response()->json(['review'=>Review::create($request->validated())]);
     }
 
     /**
@@ -46,7 +46,7 @@ class ReviewController extends Controller
     public function show($id)
     {
         $this->authorize('view',Review::class);
-        return Review::find($id);
+        return response()->json(['review'=>Review::find($id)]);
     }
 
     /**
@@ -58,9 +58,9 @@ class ReviewController extends Controller
     public function showIntern($id)
     {
         $this->authorize('view',Review::class);
-        return DB::table('reviews')
+        return response()->json(['intern'=>DB::table('reviews')
             ->where('intern_id','=',$id)
-            ->orderBy('date_reviewed','asc');
+            ->orderBy('date_reviewed','asc')]);
     }
 
     /**
@@ -75,7 +75,7 @@ class ReviewController extends Controller
         $this->authorize('update',Review::class);
         $review=Review::find($id);
         $review->update($request->validated());
-        return $review;
+        return response()->json(['review'=>$review]);
     }
 
     /**
